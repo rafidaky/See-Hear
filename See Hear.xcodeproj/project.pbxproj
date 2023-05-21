@@ -14,6 +14,7 @@
 		31AD9BA52A1A809800A1AE05 /* See_HearTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31AD9BA42A1A809800A1AE05 /* See_HearTests.swift */; };
 		31AD9BAF2A1A809800A1AE05 /* See_HearUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31AD9BAE2A1A809800A1AE05 /* See_HearUITests.swift */; };
 		31AD9BB12A1A809800A1AE05 /* See_HearUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31AD9BB02A1A809800A1AE05 /* See_HearUITestsLaunchTests.swift */; };
+		31AD9BBE2A1A815200A1AE05 /* CameraView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31AD9BBD2A1A815200A1AE05 /* CameraView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -44,6 +45,7 @@
 		31AD9BAA2A1A809800A1AE05 /* See HearUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "See HearUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		31AD9BAE2A1A809800A1AE05 /* See_HearUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = See_HearUITests.swift; sourceTree = "<group>"; };
 		31AD9BB02A1A809800A1AE05 /* See_HearUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = See_HearUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		31AD9BBD2A1A815200A1AE05 /* CameraView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -98,6 +100,7 @@
 				31AD9B952A1A809700A1AE05 /* ContentView.swift */,
 				31AD9B972A1A809700A1AE05 /* Assets.xcassets */,
 				31AD9B992A1A809700A1AE05 /* Preview Content */,
+				31AD9BBD2A1A815200A1AE05 /* CameraView.swift */,
 			);
 			path = "See Hear";
 			sourceTree = "<group>";
@@ -257,6 +260,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				31AD9BBE2A1A815200A1AE05 /* CameraView.swift in Sources */,
 				31AD9B962A1A809700A1AE05 /* ContentView.swift in Sources */,
 				31AD9B942A1A809700A1AE05 /* See_HearApp.swift in Sources */,
 			);
@@ -420,11 +424,13 @@
 				DEVELOPMENT_TEAM = B5A85N93YH;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSCameraUsageDescription = "Bu uygulamanın, görsel ve işitsel yardım sağlamak için kameranıza erişmesi gerekiyor.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -449,11 +455,13 @@
 				DEVELOPMENT_TEAM = B5A85N93YH;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSCameraUsageDescription = "Bu uygulamanın, görsel ve işitsel yardım sağlamak için kameranıza erişmesi gerekiyor.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

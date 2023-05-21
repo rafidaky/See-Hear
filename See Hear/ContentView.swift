@@ -1,21 +1,45 @@
-//
-//  ContentView.swift
-//  See Hear
-//
-//  Created by Rafida on 21.05.2023.
-//
-
 import SwiftUI
 
 struct ContentView: View {
     var body: some View {
-        VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundColor(.accentColor)
-            Text("Hello, world!")
+        NavigationView {
+            VStack {
+                Text("See Hear'a Hoş Geldiniz!")
+                    .font(.largeTitle)
+                    .fontWeight(.semibold)
+                    .padding(.bottom, 20)
+                    .foregroundColor(Color.purple)
+                Image(systemName: "globe")
+                    .resizable()
+                    .aspectRatio(contentMode: .fit)
+                    .frame(width: 100, height: 100)
+                    .foregroundColor(.purple)
+                Text("Görsel ve işitsel yardım için uygulamanız.")
+                    .font(.title3)
+                    .fontWeight(.regular)
+                    .padding(.top, 20)
+                    .multilineTextAlignment(.center)
+                    .padding(.horizontal, 20)
+                Spacer()
+                NavigationLink(
+                    destination: CameraView(),
+                    label: {
+                        Text("Başla")
+                            .font(.title2)
+                            .fontWeight(.bold)
+                            .padding()
+                            .frame(maxWidth: .infinity)
+                            .background(Color.purple)
+                            .foregroundColor(.white)
+                            .cornerRadius(10)
+                            .padding(.horizontal, 20)
+                    })
+            }
+            .padding()
+            .background(
+                LinearGradient(gradient: Gradient(colors: [.white, .purple.opacity(0.2)]), startPoint: .top, endPoint: .bottom)
+                    .edgesIgnoringSafeArea(.all))
         }
-        .padding()
     }
 }
 
