@@ -15,6 +15,7 @@
 		31AD9BAF2A1A809800A1AE05 /* See_HearUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31AD9BAE2A1A809800A1AE05 /* See_HearUITests.swift */; };
 		31AD9BB12A1A809800A1AE05 /* See_HearUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31AD9BB02A1A809800A1AE05 /* See_HearUITestsLaunchTests.swift */; };
 		31AD9BBE2A1A815200A1AE05 /* CameraView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31AD9BBD2A1A815200A1AE05 /* CameraView.swift */; };
+		31AD9BC02A1A868B00A1AE05 /* YOLOv3.mlmodel in Sources */ = {isa = PBXBuildFile; fileRef = 31AD9BBF2A1A868B00A1AE05 /* YOLOv3.mlmodel */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -46,6 +47,7 @@
 		31AD9BAE2A1A809800A1AE05 /* See_HearUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = See_HearUITests.swift; sourceTree = "<group>"; };
 		31AD9BB02A1A809800A1AE05 /* See_HearUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = See_HearUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		31AD9BBD2A1A815200A1AE05 /* CameraView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraView.swift; sourceTree = "<group>"; };
+		31AD9BBF2A1A868B00A1AE05 /* YOLOv3.mlmodel */ = {isa = PBXFileReference; lastKnownFileType = file.mlmodel; path = YOLOv3.mlmodel; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -98,9 +100,10 @@
 			children = (
 				31AD9B932A1A809700A1AE05 /* See_HearApp.swift */,
 				31AD9B952A1A809700A1AE05 /* ContentView.swift */,
+				31AD9BBD2A1A815200A1AE05 /* CameraView.swift */,
+				31AD9BBF2A1A868B00A1AE05 /* YOLOv3.mlmodel */,
 				31AD9B972A1A809700A1AE05 /* Assets.xcassets */,
 				31AD9B992A1A809700A1AE05 /* Preview Content */,
-				31AD9BBD2A1A815200A1AE05 /* CameraView.swift */,
 			);
 			path = "See Hear";
 			sourceTree = "<group>";
@@ -262,6 +265,7 @@
 			files = (
 				31AD9BBE2A1A815200A1AE05 /* CameraView.swift in Sources */,
 				31AD9B962A1A809700A1AE05 /* ContentView.swift in Sources */,
+				31AD9BC02A1A868B00A1AE05 /* YOLOv3.mlmodel in Sources */,
 				31AD9B942A1A809700A1AE05 /* See_HearApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
