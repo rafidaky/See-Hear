@@ -8,16 +8,18 @@ class CameraViewController: UIViewController, AVCaptureVideoDataOutputSampleBuff
     private var previewLayer: AVCaptureVideoPreviewLayer!
     private var detectionRequest: VNCoreMLRequest!
     private var handler: VNSequenceRequestHandler!
-
+    private var detectionInProgress = false
+    var detectedObject: String?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         guard let model = try? VNCoreMLModel(for: YOLOv3().model) else {
             fatalError("Failed to load model")
         }
         detectionRequest = VNCoreMLRequest(model: model, completionHandler: handleDetection)
         handler = VNSequenceRequestHandler()
-
+        
         let captureSession = AVCaptureSession()
         guard let captureDevice = AVCaptureDevice.default(for: .video) else { return }
         guard let input = try? AVCaptureDeviceInput(device: captureDevice) else { return }
@@ -30,7 +32,7 @@ class CameraViewController: UIViewController, AVCaptureVideoDataOutputSampleBuff
         previewLayer = AVCaptureVideoPreviewLayer(session: captureSession)
         view.layer.addSublayer(previewLayer)
         previewLayer.frame = view.frame
-
+        
         captureSession.startRunning()
     }
     
@@ -42,20 +44,42 @@ class CameraViewController: UIViewController, AVCaptureVideoDataOutputSampleBuff
     }
     
     func handleDetection(request: VNRequest, error: Error?) {
+        guard !detectionInProgress else { return }
         guard let results = request.results as? [VNRecognizedObjectObservation] else {
             return
         }
         for result in results {
-            print("Detected object: \(result.labels[0].identifier), confidence: \(result.labels[0].confidence)")
+            if result.confidence > 0.9 {
+                print("Detected object: \(result.labels[0].identifier), confidence: \(result.labels[0].confidence)")
+                detectionInProgress = true
+                detectedObject = result.labels[0].identifier
+                DispatchQueue.main.async {
+                    NotificationCenter.default.post(name: .objectDetected, object: nil)
+                }
+                break
+            }
         }
     }
+    
+}
+extension Notification.Name {
+    static let objectDetected = Notification.Name("objectDetected")
 }
 
 struct CameraView: UIViewControllerRepresentable {
+    @Binding var detectedObject: String?
+    @Binding var showAlert: Bool
     func makeUIViewController(context: Context) -> CameraViewController {
-        return CameraViewController()
-    }
-
+         let viewController = CameraViewController()
+         NotificationCenter.default.addObserver(forName: .objectDetected, object: nil, queue: .main) { _ in
+             if let object = viewController.detectedObject {
+                 self.detectedObject = object
+                 self.showAlert = true
+             }
+         }
+         return viewController
+     }
+    
     func updateUIViewController(_ uiViewController: CameraViewController, context: Context) {
     }
 }

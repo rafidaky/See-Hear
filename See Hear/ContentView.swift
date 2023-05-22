@@ -1,6 +1,9 @@
 import SwiftUI
 
 struct ContentView: View {
+    @State var detectedObject: String?
+    @State private var showAlert = false
+
     var body: some View {
         NavigationView {
             VStack {
@@ -22,7 +25,7 @@ struct ContentView: View {
                     .padding(.horizontal, 20)
                 Spacer()
                 NavigationLink(
-                    destination: CameraView(),
+                    destination: CameraView(detectedObject: $detectedObject, showAlert: $showAlert),
                     label: {
                         Text("Başla")
                             .font(.title2)
@@ -39,6 +42,13 @@ struct ContentView: View {
             .background(
                 LinearGradient(gradient: Gradient(colors: [.white, .purple.opacity(0.2)]), startPoint: .top, endPoint: .bottom)
                     .edgesIgnoringSafeArea(.all))
+            .alert(isPresented: $showAlert) {
+                Alert(
+                    title: Text("Object Detected"),
+                    message: Text("Detected object: \(detectedObject ?? "Unknown")"),
+                    dismissButton: .default(Text("OK"))
+                )
+            }
         }
     }
 }
