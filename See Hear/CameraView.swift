@@ -29,8 +29,17 @@ class CameraViewController: UIViewController, AVCaptureVideoDataOutputSampleBuff
         handler = VNSequenceRequestHandler()
         
         let captureSession = AVCaptureSession()
-        guard let captureDevice = AVCaptureDevice.default(for: .video) else { return }
-        guard let input = try? AVCaptureDeviceInput(device: captureDevice) else { return }
+        
+        guard let captureDevice = AVCaptureDevice.default(for: .video) else {
+            print("Failed to get capture device")
+            return
+        }
+        
+        guard let input = try? AVCaptureDeviceInput(device: captureDevice) else {
+            print("Failed to create input from capture device")
+            return
+        }
+        
         captureSession.addInput(input)
         
         let dataOutput = AVCaptureVideoDataOutput()
@@ -46,29 +55,46 @@ class CameraViewController: UIViewController, AVCaptureVideoDataOutputSampleBuff
     
     func captureOutput(_ output: AVCaptureOutput, didOutput sampleBuffer: CMSampleBuffer, from connection: AVCaptureConnection) {
         guard let pixelBuffer = CMSampleBufferGetImageBuffer(sampleBuffer) else {
+            print("Failed to get pixel buffer from sample buffer")
             return
         }
-        try? handler.perform([detectionRequest], on: pixelBuffer)
+        
+        do {
+            try handler.perform([detectionRequest], on: pixelBuffer)
+        } catch {
+            print("Failed to perform object detection: \(error)")
+        }
     }
     
     func handleDetection(request: VNRequest, error: Error?) {
         guard !detectionInProgress else { return }
         guard let results = request.results as? [VNRecognizedObjectObservation] else {
+            print("Failed to get results from VNRequest")
             return
         }
+        
+        let minimumConfidence: Float = 0.9
+        let maximumFrequency: TimeInterval = 3.5 // Adjust the frequency here (in seconds)
+        
         for result in results {
-            if result.confidence > 0.9 {
-                print("Detected object: \(result.labels[0].identifier), confidence: \(result.labels[0].confidence)")
-                detectionInProgress = true
-                detectedObject = result.labels[0].identifier
-                speakDetectedObject()
-                break
+            if result.confidence > minimumConfidence {
+                if let detectedObject = result.labels.first?.identifier {
+                    let currentTime = Date.timeIntervalSinceReferenceDate
+                    let lastVoicingTime = UserDefaults.standard.object(forKey: "lastVoicingTime") as? TimeInterval ?? 0.0
+                    let timeSinceLastVoicing = currentTime - lastVoicingTime
+                    if timeSinceLastVoicing >= maximumFrequency {
+                        speakDetectedObject(detectedObject: detectedObject)
+                        UserDefaults.standard.set(currentTime, forKey: "lastVoicingTime")
+                    }
+                }
             }
         }
     }
-    
-    func speakDetectedObject() {
-        guard let object = detectedObject else { return }
+
+    func speakDetectedObject(detectedObject: String) {
+        self.detectedObject = detectedObject
+        
+
         
         let objectTranslations: [String: String] = [
             "person": "insan",
@@ -154,15 +180,13 @@ class CameraViewController: UIViewController, AVCaptureVideoDataOutputSampleBuff
             // Add more translations as needed
         ]
         
-        
-        // Get the Turkish translation for the object, if available
-        let translatedObject = objectTranslations[object] ?? object
-        
+        let translatedObject = objectTranslations[self.detectedObject ?? ""] ?? self.detectedObject ?? ""
+
         let speechUtterance = AVSpeechUtterance(string: "Görülen Nesne: \(translatedObject)")
         speechUtterance.voice = AVSpeechSynthesisVoice(language: "tr-TR")
-        
+
         speechSynthesizer.speak(speechUtterance)
-        
+
         DispatchQueue.main.async {
             NotificationCenter.default.post(name: .objectDetected, object: nil)
         }
@@ -184,6 +208,7 @@ struct CameraView: UIViewControllerRepresentable {
         NotificationCenter.default.addObserver(forName: .objectDetected, object: nil, queue: .main) { _ in
             self.detectedObject = viewController.detectedObject
         }
+        viewController.detectedObject = self.detectedObject // Assign the value to the view controller
         return viewController
     }
     
