@@ -18,6 +18,23 @@ class CameraViewController: UIViewController, AVCaptureVideoDataOutputSampleBuff
     private var speechSynthesizer = AVSpeechSynthesizer()
     
     
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        stopCaptureSession()
+        stopSpeechSynthesizer()
+    }
+    
+    private func stopCaptureSession() {
+        if let captureSession = previewLayer.session {
+            captureSession.stopRunning()
+        }
+    }
+    
+    private func stopSpeechSynthesizer() {
+        speechSynthesizer.stopSpeaking(at: .immediate)
+    }
+    
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
