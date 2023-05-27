@@ -35,6 +35,19 @@ struct ContentView: View {
                             .cornerRadius(10)
                             .padding(.horizontal, 20)
                     })
+                NavigationLink(
+                    destination: SettingsView(),
+                    label: {
+                        Text("Ayarlar")
+                            .font(.title2)
+                            .fontWeight(.bold)
+                            .padding()
+                            .frame(maxWidth: .infinity)
+                            .background(Color.purple)
+                            .foregroundColor(.white)
+                            .cornerRadius(10)
+                            .padding(.horizontal, 20)
+                    })
             }
             .padding()
             .background(

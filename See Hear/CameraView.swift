@@ -90,110 +90,68 @@ class CameraViewController: UIViewController, AVCaptureVideoDataOutputSampleBuff
             }
         }
     }
-
+    
     func speakDetectedObject(detectedObject: String) {
         self.detectedObject = detectedObject
+        let defaultLanguage = "tr-TR"
+        let selectedVoiceIdentifier = UserDefaults.standard.string(forKey: "selectedVoice")
+        let selectedVoice = AVSpeechSynthesisVoice(identifier: selectedVoiceIdentifier ?? "")
+        let selectedLanguage = selectedVoice?.language ?? defaultLanguage
         
-
+        // Create a mutable copy of translations
+        var updatedTranslations = translations
         
-        let objectTranslations: [String: String] = [
-            "person": "insan",
-            "car": "araba",
-            "bicycle": "bisiklet",
-            "motorbike": "motosiklet",
-            "bus": "otobüs",
-            "truck": "kamyon",
-            "traffic light": "trafik lambası",
-            "stop sign": "dur işareti",
-            "cat": "kedi",
-            "dog": "köpek",
-            "aeroplane": "uçak",
-            "train": "tren",
-            "boat": "tekne",
-            "fire hydrant": "yangın musluğu",
-            "parking meter": "parkmetre",
-            "bench": "bank",
-            "bird": "kuş",
-            "horse": "at",
-            "cow": "inek",
-            "sheep": "koyun",
-            "elephant": "fil",
-            "bear": "ayı",
-            "zebra": "zebra",
-            "giraffe": "zürafa",
-            "backpack": "sırt çantası",
-            "umbrella": "şemsiye",
-            "handbag": "el çantası",
-            "tie": "kravat",
-            "suitcase": "bavul",
-            "frisbee": "frizbi",
-            "skis": "kayaklar",
-            "snowboard": "snowboard",
-            "sports ball": "spor topu",
-            "kite": "uçurtma",
-            "baseball bat": "beyzbol sopası",
-            "baseball glove": "beyzbol eldiveni",
-            "skateboard": "kaykay",
-            "surfboard": "sörf tahtası",
-            "tennis racket": "tenis raketi",
-            "bottle": "şişe",
-            "wine glass": "şarap bardağı",
-            "cup": "fincan",
-            "fork": "çatal",
-            "knife": "bıçak",
-            "spoon": "kaşık",
-            "bowl": "kase",
-            "apple": "elma",
-            "sandwich": "sandviç",
-            "orange": "portakal",
-            "broccoli": "brokoli",
-            "carrot": "havuç",
-            "hot dog": "sosisli",
-            "pizza": "pizza",
-            "donut": "çörek",
-            "cake": "kek",
-            "chair": "sandalye",
-            "sofa": "kanepe",
-            "pottedplant": "saksı bitkisi",
-            "bed": "yatak",
-            "diningtable": "yemek masası",
-            "toilet": "tuvalet",
-            "tvmonitor": "televizyon",
-            "laptop": "dizüstü bilgisayar",
-            "mouse": "fare",
-            "remote": "uzaktan kumanda",
-            "keyboard": "klavye",
-            "cell phone": "cep telefonu",
-            "microwave": "mikrodalga fırın",
-            "oven": "fırın",
-            "toaster": "tost makinesi",
-            "sink": "lavabo",
-            "refrigerator": "buzdolabı",
-            "book": "kitap",
-            "clock": "saat",
-            "vase": "vazo",
-            "scissors": "makas",
-            "teddy bear": "oyuncak ayı",
-            "hair drier": "saç kurutma makinesi",
-            "toothbrush": "diş fırçası"
-            
-            // Add more translations as needed
-        ]
+        // Update translations for all languages
+        for (languageCode, _) in updatedTranslations {
+            if languageCode.hasPrefix("en-") { // English
+                updatedTranslations[languageCode] = translations["en-US"]
+            } else if languageCode.hasPrefix("tr-") { // Turkish
+                updatedTranslations[languageCode] = translations["tr-TR"]
+            } else if languageCode.hasPrefix("fr-") { // French
+                updatedTranslations[languageCode] = translations["fr-FR"]
+            } else if languageCode.hasPrefix("de-") { // German
+                updatedTranslations[languageCode] = translations["de-DE"]
+            } else if languageCode.hasPrefix("it-") { // Italian
+                updatedTranslations[languageCode] = translations["it-IT"]
+            }
+        }
         
-        let translatedObject = objectTranslations[self.detectedObject ?? ""] ?? self.detectedObject ?? ""
+        let languageTranslations = updatedTranslations[selectedLanguage] ?? updatedTranslations[defaultLanguage]!
+        
+        let translatedObject = languageTranslations[self.detectedObject ?? ""] ?? self.detectedObject ?? ""
+        
+        var detectionPhrase: String
+        
+        switch selectedLanguage {
+        case "en-US":
+            detectionPhrase = "Detected Object"
+        case "tr-TR":
+            detectionPhrase = "Görülen Nesne"
+        case "fr-FR":
+            detectionPhrase = "Objet Détecté"
+        case "de-DE":
+            detectionPhrase = "Erkanntes Objekt"
+        case "it-IT":
+            detectionPhrase = "Oggetto Rilevato"
+        default:
+            detectionPhrase = "Detected Object"
+        }
+        
+        let speechUtterance = AVSpeechUtterance(string: "\(detectionPhrase): \(translatedObject)")
+        speechUtterance.voice = AVSpeechSynthesisVoice(language: selectedLanguage)
 
-        let speechUtterance = AVSpeechUtterance(string: "Görülen Nesne: \(translatedObject)")
-        speechUtterance.voice = AVSpeechSynthesisVoice(language: "tr-TR")
-
+        if let selectedVoiceIdentifier = UserDefaults.standard.string(forKey: "selectedVoice") {
+            speechUtterance.voice = AVSpeechSynthesisVoice(identifier: selectedVoiceIdentifier)
+        } else {
+            // Use default voice if no voice is selected
+            speechUtterance.voice = AVSpeechSynthesisVoice(language: selectedLanguage)
+        }
         speechSynthesizer.speak(speechUtterance)
 
         DispatchQueue.main.async {
             NotificationCenter.default.post(name: .objectDetected, object: nil)
         }
     }
-    
-    
-    
 }
 
 extension Notification.Name {
