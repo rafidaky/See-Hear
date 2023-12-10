@@ -15,9 +15,12 @@
 		31AD9BAF2A1A809800A1AE05 /* See_HearUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31AD9BAE2A1A809800A1AE05 /* See_HearUITests.swift */; };
 		31AD9BB12A1A809800A1AE05 /* See_HearUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31AD9BB02A1A809800A1AE05 /* See_HearUITestsLaunchTests.swift */; };
 		31AD9BBE2A1A815200A1AE05 /* CameraView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31AD9BBD2A1A815200A1AE05 /* CameraView.swift */; };
-		31AD9BC02A1A868B00A1AE05 /* YOLOv3.mlmodel in Sources */ = {isa = PBXBuildFile; fileRef = 31AD9BBF2A1A868B00A1AE05 /* YOLOv3.mlmodel */; };
 		31AD9BC62A22492500A1AE05 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31AD9BC52A22492500A1AE05 /* SettingsView.swift */; };
 		31AD9BC82A225EDE00A1AE05 /* Translations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31AD9BC72A225EDE00A1AE05 /* Translations.swift */; };
+		C0357C412B23C08A0020162D /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0357C402B23C08A0020162D /* LoginView.swift */; };
+		C0357C432B26480F0020162D /* RegisterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0357C422B26480F0020162D /* RegisterView.swift */; };
+		C04F84222ADBE5E5001332D2 /* YOLOv3.mlmodel in Sources */ = {isa = PBXBuildFile; fileRef = C04F84212ADBE5E5001332D2 /* YOLOv3.mlmodel */; };
+		C0620E1C2B1E2D89002FA1F5 /* YOLOv3.mlmodel in Sources */ = {isa = PBXBuildFile; fileRef = C0620E1B2B1E2D89002FA1F5 /* YOLOv3.mlmodel */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -49,9 +52,12 @@
 		31AD9BAE2A1A809800A1AE05 /* See_HearUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = See_HearUITests.swift; sourceTree = "<group>"; };
 		31AD9BB02A1A809800A1AE05 /* See_HearUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = See_HearUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		31AD9BBD2A1A815200A1AE05 /* CameraView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraView.swift; sourceTree = "<group>"; };
-		31AD9BBF2A1A868B00A1AE05 /* YOLOv3.mlmodel */ = {isa = PBXFileReference; lastKnownFileType = file.mlmodel; path = YOLOv3.mlmodel; sourceTree = "<group>"; };
 		31AD9BC52A22492500A1AE05 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		31AD9BC72A225EDE00A1AE05 /* Translations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Translations.swift; sourceTree = "<group>"; };
+		C0357C402B23C08A0020162D /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
+		C0357C422B26480F0020162D /* RegisterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterView.swift; sourceTree = "<group>"; };
+		C04F84212ADBE5E5001332D2 /* YOLOv3.mlmodel */ = {isa = PBXFileReference; lastKnownFileType = file.mlmodel; path = YOLOv3.mlmodel; sourceTree = "<group>"; };
+		C0620E1B2B1E2D89002FA1F5 /* YOLOv3.mlmodel */ = {isa = PBXFileReference; lastKnownFileType = file.mlmodel; path = YOLOv3.mlmodel; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -103,13 +109,16 @@
 			isa = PBXGroup;
 			children = (
 				31AD9B932A1A809700A1AE05 /* See_HearApp.swift */,
+				C0620E1B2B1E2D89002FA1F5 /* YOLOv3.mlmodel */,
+				C0357C402B23C08A0020162D /* LoginView.swift */,
 				31AD9B952A1A809700A1AE05 /* ContentView.swift */,
 				31AD9BBD2A1A815200A1AE05 /* CameraView.swift */,
+				C04F84212ADBE5E5001332D2 /* YOLOv3.mlmodel */,
 				31AD9BC52A22492500A1AE05 /* SettingsView.swift */,
-				31AD9BBF2A1A868B00A1AE05 /* YOLOv3.mlmodel */,
 				31AD9B972A1A809700A1AE05 /* Assets.xcassets */,
 				31AD9B992A1A809700A1AE05 /* Preview Content */,
 				31AD9BC72A225EDE00A1AE05 /* Translations.swift */,
+				C0357C422B26480F0020162D /* RegisterView.swift */,
 			);
 			path = "See Hear";
 			sourceTree = "<group>";
@@ -269,11 +278,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C0357C432B26480F0020162D /* RegisterView.swift in Sources */,
 				31AD9BC62A22492500A1AE05 /* SettingsView.swift in Sources */,
 				31AD9BC82A225EDE00A1AE05 /* Translations.swift in Sources */,
+				C0620E1C2B1E2D89002FA1F5 /* YOLOv3.mlmodel in Sources */,
+				C04F84222ADBE5E5001332D2 /* YOLOv3.mlmodel in Sources */,
 				31AD9BBE2A1A815200A1AE05 /* CameraView.swift in Sources */,
 				31AD9B962A1A809700A1AE05 /* ContentView.swift in Sources */,
-				31AD9BC02A1A868B00A1AE05 /* YOLOv3.mlmodel in Sources */,
+				C0357C412B23C08A0020162D /* LoginView.swift in Sources */,
 				31AD9B942A1A809700A1AE05 /* See_HearApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

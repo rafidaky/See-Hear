@@ -96,6 +96,7 @@ class CameraViewController: UIViewController, AVCaptureVideoDataOutputSampleBuff
         for result in results {
             if result.confidence > minimumConfidence {
                 if let detectedObject = result.labels.first?.identifier {
+                    print(detectedObject,"detectedObject")
                     let currentTime = Date.timeIntervalSinceReferenceDate
                     let lastVoicingTime = UserDefaults.standard.object(forKey: "lastVoicingTime") as? TimeInterval ?? 0.0
                     let timeSinceLastVoicing = currentTime - lastVoicingTime

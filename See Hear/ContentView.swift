@@ -2,6 +2,8 @@ import SwiftUI
 
 struct ContentView: View {
     @State var detectedObject: String?
+    @State private var isLoginActive: Bool = false
+    
     var body: some View {
         NavigationView {
             VStack {
@@ -23,18 +25,23 @@ struct ContentView: View {
                     .padding(.horizontal, 20)
                 Spacer()
                 NavigationLink(
-                    destination: CameraView(detectedObject: $detectedObject),
-                    label: {
-                        Text("Başla")
-                            .font(.title2)
-                            .fontWeight(.bold)
-                            .padding()
-                            .frame(maxWidth: .infinity)
-                            .background(Color.purple)
-                            .foregroundColor(.white)
-                            .cornerRadius(10)
-                            .padding(.horizontal, 20)
-                    })
+                          destination: LoginView(),
+                          isActive: $isLoginActive,
+                          label: {
+                              Text("Başla")
+                                  .font(.title2)
+                                  .fontWeight(.bold)
+                                  .padding()
+                                  .frame(maxWidth: .infinity)
+                                  .background(Color.purple)
+                                  .foregroundColor(.white)
+                                  .cornerRadius(10)
+                                  .padding(.horizontal, 20)
+                          })
+                          .isDetailLink(false)
+                          .simultaneousGesture(TapGesture().onEnded {
+                              self.isLoginActive = true
+                          })
                 NavigationLink(
                     destination: SettingsView(),
                     label: {
