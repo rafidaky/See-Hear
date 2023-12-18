@@ -6,9 +6,6 @@ import Vision
 
 
 
-
-
-
 class CameraViewController: UIViewController, AVCaptureVideoDataOutputSampleBufferDelegate {
     private var previewLayer: AVCaptureVideoPreviewLayer!
     private var detectionRequest: VNCoreMLRequest!
