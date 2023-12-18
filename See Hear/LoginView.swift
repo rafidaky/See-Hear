@@ -7,68 +7,72 @@ struct LoginView: View {
     @State private var alertMessage: String = ""
     @State private var detectedObject: String? = nil
     @State private var navigationTag: Int? = nil
+    @Environment(\.presentationMode) var presentationMode
 
     var body: some View {
-        if #available(iOS 16.0, *) {
-            
-                VStack {
+        NavigationView {
+            VStack {
+                Text("Giriş Yap")
+                    .font(.largeTitle)
+                    .foregroundColor(.purple)
+                    .padding(.bottom, 20)
+
+                Image(systemName: "person.circle.fill")
+                    .resizable()
+                    .aspectRatio(contentMode: .fill)
+                    .frame(width: 100, height: 100)
+                    .foregroundColor(.purple)
+                    .padding(.bottom, 20)
+
+                TextField("Kullanıcı Adı", text: $username)
+                    .textFieldStyle(RoundedBorderTextFieldStyle())
+                    .autocapitalization(.none)
+                    .padding(.horizontal, 20)
+                    .padding(.bottom, 10)
+
+                SecureField("Şifre", text: $password)
+                    .textFieldStyle(RoundedBorderTextFieldStyle())
+                    .padding(.horizontal, 20)
+                    .padding(.bottom, 20)
+
+                Button(action: {
+                    login()
+                }, label: {
                     Text("Giriş Yap")
-                        .font(.largeTitle)
-                        .foregroundColor(.purple)
-                        .padding(.bottom, 20)
-                    
-                    Image(systemName: "person.circle.fill")
-                        .resizable()
-                        .aspectRatio(contentMode: .fill)
-                        .frame(width: 100, height: 100)
-                        .foregroundColor(.purple)
-                        .padding(.bottom, 20)
-                    
-                    TextField("Kullanıcı Adı", text: $username)
-                        .textFieldStyle(RoundedBorderTextFieldStyle())
-                        .autocapitalization(.none)
+                        .font(.title2)
+                        .fontWeight(.bold)
+                        .padding()
+                        .frame(maxWidth: .infinity)
+                        .background(Color.purple)
+                        .foregroundColor(.white)
+                        .cornerRadius(10)
                         .padding(.horizontal, 20)
-                        .padding(.bottom, 10)
-                    
-                    SecureField("Şifre", text: $password)
-                        .textFieldStyle(RoundedBorderTextFieldStyle())
-                        .padding(.horizontal, 20)
-                        .padding(.bottom, 20)
-                    
-                    Button(action: {
-                        login()
-                    }, label: {
-                        Text("Giriş Yap")
-                            .font(.title2)
-                            .fontWeight(.bold)
-                            .padding()
-                            .frame(maxWidth: .infinity)
-                            .background(Color.purple)
-                            .foregroundColor(.white)
-                            .cornerRadius(10)
-                            .padding(.horizontal, 20)
-                    })
-                    .navigationBarHidden(true)
-                    
-                    Spacer()
-                }
-                .padding()
-                .background(
-                    LinearGradient(gradient: Gradient(colors: [.white, .purple.opacity(0.2)]), startPoint: .top, endPoint: .bottom)
-                        .edgesIgnoringSafeArea(.all))
-                .alert(isPresented: $showAlert, content: {
-                    Alert(title: Text(showAlert ? (alertMessage.contains("Hata") ? "Hata" : "Başarılı") : ""),
-                          message: Text(alertMessage),
-                          dismissButton: .default(Text("Tamam")))
                 })
-                .background(
-                    NavigationLink(destination: CameraView(detectedObject: $detectedObject), tag: 1, selection: $navigationTag) {
-                        EmptyView()
-                    }
-                )
-            
-        } else {
-            // Fallback on earlier versions
+
+                NavigationLink(destination: RegisterView(), label: {
+                    Text("Hesabınız yok mu? Üye olun")
+                        .font(.body)
+                        .foregroundColor(.purple)
+                        .padding()
+                })
+
+                Spacer()
+            }
+            .padding()
+            .background(
+                LinearGradient(gradient: Gradient(colors: [.white, .purple.opacity(0.2)]), startPoint: .top, endPoint: .bottom)
+                    .edgesIgnoringSafeArea(.all))
+            .alert(isPresented: $showAlert, content: {
+                Alert(title: Text(showAlert ? (alertMessage.contains("Hata") ? "Hata" : "Başarılı") : ""),
+                      message: Text(alertMessage),
+                      dismissButton: .default(Text("Tamam")))
+            })
+            .background(
+                NavigationLink(destination: CameraView(detectedObject: $detectedObject), tag: 1, selection: $navigationTag) {
+                    EmptyView()
+                }
+            )
+            .navigationBarTitle("", displayMode: .inline)
         }
     }
 
