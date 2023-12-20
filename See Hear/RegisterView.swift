@@ -28,6 +28,7 @@ struct RegisterView: View {
                     .textFieldStyle(RoundedBorderTextFieldStyle())
                     .padding(.horizontal, 20)
                     .padding(.bottom, 10)
+                    .autocapitalization(.none)
 
                 SecureField("Şifre", text: $sifre)
                     .textFieldStyle(RoundedBorderTextFieldStyle())

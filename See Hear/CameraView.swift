@@ -99,12 +99,44 @@ class CameraViewController: UIViewController, AVCaptureVideoDataOutputSampleBuff
                     let timeSinceLastVoicing = currentTime - lastVoicingTime
                     if timeSinceLastVoicing >= maximumFrequency {
                         speakDetectedObject(detectedObject: detectedObject)
+                        saveObject(detectedObject: detectedObject)
                         UserDefaults.standard.set(currentTime, forKey: "lastVoicingTime")
                     }
                 }
             }
         }
     }
+    private func saveObject(detectedObject: String) {
+        guard let url = URL(string: "http://10.0.0.191:8080/api/items/save") else {
+            return
+        }
+
+        let dateFormatter = ISO8601DateFormatter()
+        let detectionDateTimeString = dateFormatter.string(from: Date())
+
+        let body: [String: Any] = [
+            "itemName": detectedObject,
+            "detectionDateTime": detectionDateTimeString
+        ]
+
+        var request = URLRequest(url: url)
+        request.httpMethod = "POST"
+        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+        request.httpBody = try? JSONSerialization.data(withJSONObject: body)
+
+        URLSession.shared.dataTask(with: request) { data, response, error in
+            if let error = error {
+                print("Error: \(error.localizedDescription)")
+            } else if let data = data, let response = response as? HTTPURLResponse {
+                if response.statusCode == 201 {
+                    print("Item saved successfully")
+                } else {
+                    print("Failed to save item. Status code: \(response.statusCode)")
+                }
+            }
+        }.resume()
+    }
+
     
     func speakDetectedObject(detectedObject: String) {
         self.detectedObject = detectedObject
